@@ -17,7 +17,7 @@
             <blockquote class="layui-elem-quote mylog-info-tit">
                 <ul class="layui-tab-title">
                     <shiro:hasPermission name="rolePermission:add">
-                        <li class="layui-btn " onclick="role.addRole()"><i class="layui-icon">&#xe61f;</i>添加角色
+                        <li class="layui-btn " onclick="role.addMenu()"><i class="layui-icon">&#xe61f;</i>添加角色
                         </li>
                     </shiro:hasPermission>
 
@@ -29,13 +29,17 @@
                 <div class="layui-form ">
                     <table id="example" class="layui-table lay-even " data-name="articleCatData">
                         <thead>
+                        <colgroup>
+                            <col width="200">
+                            <col width="400">
+                            <col width="300">
+                            <col width="300">
+                        </colgroup>
                         <tr>
-                            <%--<th width="30"><input type="checkbox" id="checkall" data-name="checkbox" lay-filter="check"--%>
-                            <%--lay-skin="primary"></th>--%>
                             <th>序号</th>
                             <th>角色名称</th>
                             <th>是否可用</th>
-                            <th width="150">操作</th>
+                            <th >操作</th>
                         </tr>
                         </thead>
                         <tbody id="list">
@@ -50,6 +54,7 @@
 </section>
 </body>
 <%@ include file="layer.jsp" %>
+<script type="text/javascript" src="${baseurl}/js/searchJs.js"></script>
 <script type="text/javascript" src="${baseurl}/public/common/layui/layui.js"></script>
 <script type="text/javascript">
     let totalSize = 10;
@@ -71,6 +76,7 @@
                 layui.laypage({
                     cont: 'demo1',
                     pages: totalSize, //总页数
+                    last: totalSize,
                     curr: currentIndex,
                     groups: 5,//连续显示分页数
                     skin: '#1E9FFF',
@@ -85,6 +91,7 @@
             list: function () {
                 $.ajax({
                     url: baseUrl + "userRole/list",
+                    type:"post",
                     data: {currentIndex: currentIndex, pageSize: pageSize},
                     success: function (data) {
                         if (data.result) {
@@ -101,7 +108,7 @@
                 });
 
             },
-            addRole: function () {
+            addMenu: function () {
                 layer.open({
                     type: 1,
                     title: '角色添加'
@@ -112,6 +119,7 @@
             viewRole: function (id) {
                 $.ajax({
                     url: baseUrl + "userRole/query",
+                    type:"post",
                     data: {roleId: id},
                     success: function (data) {
                         if (data.result) {
@@ -142,11 +150,11 @@
             viewPermission: function (roleId) {
                 $.ajax({
                     url: baseUrl + "/userRole/viewPermission",
+                    type:"post",
                     data: {roleId: roleId},
                     success: function (data) {
                         if (data.result) {
                             roleid = roleId;
-                            console.log(data)
                             hasPermission = data.data.hasPermissions;
                             let nodes = role.changePermissionToTree(data.data.permissions);
 
@@ -155,6 +163,22 @@
                     }
                 })
 
+            }
+            ,deletePermission: function (roleId) {
+                layer.confirm('确定删除？', {icon: 3, title: '提示'}, function (index) {
+                    layer.close(index);
+                    $.ajax({
+                        url: baseUrl + "/userRole/deletePermission",
+                        type:"post",
+                        data: {roleId: roleId},
+                        success: function (data) {
+                            layer.msg(data.msg);
+                            if (data.result) {
+                                setTimeout("location.reload()", 500);
+                            }
+                        }
+                    })
+                });
             }
             ,
             showRoleTree: function (nodes) {
@@ -171,7 +195,6 @@
                     btnAlign: 'l',
                     btn: ['确定修改']
                     , yes: function (index, layero) {
-                        console.log(hasPermission);
                         let updatePermissions = "";
                         let allNodes = $(".per");
                         for (let i = 0; i < allNodes.length; ++i) {
@@ -268,6 +291,7 @@
             form.on('submit(role-add)', function (data) {
                 $.ajax({
                     url: baseUrl + "userRole/add",
+                    type:"post",
                     data: $("#role-add").serialize(),
                     success: function (data) {
                         if (data.result) {

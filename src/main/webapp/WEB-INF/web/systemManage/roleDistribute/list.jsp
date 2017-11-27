@@ -38,7 +38,7 @@
                             <th>序号</th>
                             <th>一卡通/工号</th>
                             <th>姓名</th>
-                            <th>职位</th>
+                            <th>岗位</th>
                             <th>当前权限</th>
                         </tr>
                         </thead>
@@ -62,9 +62,12 @@
         <td>{{ item.staff}}</td>
         <td>
             <shiro:hasPermission name="userRole:update">
-                <select name="{{ item.username}}" lay-filter="role_select" haha="222">
+                <select name="{{ item.username}}" lay-filter="role_select" >
 
-                    <option value={{ item.roleId}}>{{ item.roleName}}</option>
+                    <option value={{ item.roleId}}> {{# if(item.roleName === undefined){ }}
+                        请分配
+                        {{# }else{ }}
+                        {{ item.roleName}}{{#}}}</option>
 
                     {{# layui.each(d.roles, function(index, role){ }}
                     {{#if (item.roleId!=role.id){ }}
@@ -75,7 +78,12 @@
             </shiro:hasPermission>
             <shiro:lacksPermission name="userRole:update">
                 <select disabled>
-                    <option value={{ item.roleId}}>{{ item.roleName}}</option>
+                    <option value={{ item.roleId}}>
+                        {{# if(item.roleName === undefined){ }}
+                        请分配
+                        {{# }else{ }}
+                        {{ item.roleName}}{{#}}}
+                    </option>
                 </select>
             </shiro:lacksPermission>
         </td>
@@ -84,6 +92,7 @@
 
 </script>
 
+<script type="text/javascript" src="${baseurl}/js/searchJs.js"></script>
 <script type="text/javascript" src="${baseurl}/public/common/layui/layui.js"></script>
 <script type="text/javascript">
     let totalSize = 10;
@@ -103,6 +112,7 @@
                 layui.laypage({
                     cont: 'demo1',
                     pages: totalSize, //总页数
+                    last: totalSize,
                     curr: currentIndex,
                     groups: 5,//连续显示分页数
                     skin: '#1E9FFF',
@@ -118,9 +128,9 @@
                 let keyWork = $("#keyWork").val();
                 $.ajax({
                     url: baseUrl + "/roleDistribute/list",
+                    type:"post",
                     data: {currentIndex: currentIndex, pageSize: pageSize, name: keyWork},
                     success: function (data) {
-                        layer.msg(data.msg);
                         if (data.result) {
                             currentIndex = data.page.currentIndex;
                             totalSize = data.page.totalSize;

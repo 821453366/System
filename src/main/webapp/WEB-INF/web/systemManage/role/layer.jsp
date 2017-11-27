@@ -71,13 +71,18 @@
         </td>
         <td>
             <shiro:hasPermission name="rolePermission:update">
-                <button class="layui-btn layui-btn-mini layui-btn-normal" onclick="role.viewRole({{item.id}})">
+                <button class="layui-btn layui-btn-mini " style="background: #21a1a1" onclick="role.viewRole({{item.id}})">
                     <i class="layui-icon">&#xe642;</i>角色修改
                 </button>
             </shiro:hasPermission>
             <shiro:hasPermission name="rolePermission:setting">
                 <button class="layui-btn layui-btn-mini  layui-btn-danger" onclick="role.viewPermission({{item.id}})">
                     <i class="layui-icon">&#xe60a;</i>配置权限
+                </button>
+            </shiro:hasPermission>
+            <shiro:hasPermission name="rolePermission:delete">
+                <button class="layui-btn layui-btn-mini  layui-btn-danger" onclick="role.deletePermission({{item.id}})">
+                    <i class="layui-icon">&#xe60a;</i>删除角色
                 </button>
             </shiro:hasPermission>
         </td>
