@@ -28,7 +28,7 @@
     <insert id="addPermission" parameterType="Permission">
         INSERT INTO t_permission (id, name, type, url, icon, parentid, parentids, sortstring, available, percode)
         VALUES (#{id}, #{name}, #{type}, #{url}, #{icon}, #{parentId}, #{parentIds}, #{sortString}, #{available},
-        #{perCode})
+                #{perCode})
     </insert>
     <update id="updatePermission" parameterType="Permission">
         UPDATE t_permission
@@ -89,8 +89,8 @@
     <select id="findPermissionListByRoleId" resultType="Permission" parameterType="int">
         SELECT t_permission.*
         FROM t_permission
-        LEFT JOIN (SELECT *
-        FROM t_role_permission) role ON role.sys_role_id = #{roleId}
+            LEFT JOIN (SELECT *
+                       FROM t_role_permission) role ON role.sys_role_id = #{roleId}
         WHERE t_permission.type != 'menu' AND t_permission.id = role.sys_permission_id
     </select>
 
