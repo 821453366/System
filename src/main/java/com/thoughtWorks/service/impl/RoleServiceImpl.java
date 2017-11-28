@@ -21,7 +21,7 @@ public class RoleServiceImpl implements RoleService {
     public List<Role> queryList(PageUtil page) throws Exception {
         Map<String, Object> data = new HashMap<>();
         data.put("start", (page.getCurrentIndex() - 1) * page.getPageSize());
-        data.put("end", (page.getCurrentIndex() - 1) * page.getPageSize() + page.getPageSize());
+        data.put("end", page.getPageSize());
         page.setTotalSize(roleDao.queryTotalCount());
 
         return roleDao.queryList(data);
@@ -41,6 +41,10 @@ public class RoleServiceImpl implements RoleService {
     public void update(Role role) throws Exception {
         roleDao.update(role);
     }
+    @Override
+    public void deletePermission(String roleId) throws Exception {
+        roleDao.deletePermission(roleId);
+    }
 
     @Override
     public void updateRolePermissions(String hasPers, String updatePers, String roleId) throws Exception {
@@ -50,7 +54,7 @@ public class RoleServiceImpl implements RoleService {
         List<String> shouldInsert = shouldInsertPers(oldPermissions, newPermissions);
 
         if (shouldDelete.size() != 0) roleDao.deleteRolePermissions(shouldDelete, roleId);
-        if (shouldInsert.size() != 0) roleDao.addRolePermissions(shouldInsert, roleId);
+        if (shouldInsert.size() != 0 && !"".equals(shouldInsert.get(0))) roleDao.addRolePermissions(shouldInsert, roleId);
     }
 
     @Override
@@ -62,7 +66,7 @@ public class RoleServiceImpl implements RoleService {
     public List<Map<String, String>> queryUserRoleList(PageUtil page, String name) throws Exception {
         Map<String, Object> data = new HashMap<>();
         data.put("start", (page.getCurrentIndex() - 1) * page.getPageSize());
-        data.put("end", (page.getCurrentIndex() - 1) * page.getPageSize() + page.getPageSize());
+        data.put("end", page.getPageSize());
         data.put("name", "%" + name + "%");
         page.setTotalSize(roleDao.queryUserRoleTotalCount("%" + name + "%"));
 
@@ -90,15 +94,16 @@ public class RoleServiceImpl implements RoleService {
         roleDao.updateUserRole(user);
     }
 
+
     private List<String> shouldDeletePers(List<String> oldPermissions, List<String> newPermissions) {
-        List<String> shouldInsert = new ArrayList<>();
+        List<String> shouldDelete = new ArrayList<>();
         for (String permission : oldPermissions) {
             if (!newPermissions.contains(permission)) {
-                shouldInsert.add(permission);
+                shouldDelete.add(permission);
             }
         }
 
-        return shouldInsert;
+        return shouldDelete;
     }
 
     @Override

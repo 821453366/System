@@ -4,7 +4,7 @@
 
 <html lang="en">
 <head>
-    <title>高职学生信息管理系统</title>
+    <title>System后台系统</title>
     <meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -16,8 +16,8 @@
 <div class="larry-canvas" id="canvas"></div>
 <div class="layui-layout layui-layout-login">
     <h1>
-        <strong>高职学生信息</strong>
-        <em>Management System</em>
+        <strong>后台系统</strong>
+        <em> System</em>
     </h1>
     <div class="layui-user-icon larry-login">
         <input type="text" placeholder="账号" id="userName" required class="login_txtbx"/>
@@ -25,13 +25,13 @@
     <div class="layui-pwd-icon larry-login">
         <input type="password" placeholder="密码" id="password" required class="login_txtbx"/>
     </div>
-    <div class="layui-val-icon larry-login">
-        <div class="layui-code-box">
-            <input type="text" id="code" name="code" placeholder="验证码" maxlength="4" class="login_txtbx">
-            <img src="${baseurl}/public/images/verifyimg.png" alt="" class="verifyImg" id="verifyImg"
-                 onclick="javascript:this.src='xxx'+Math.random();">
-        </div>
-    </div>
+    <%--<div class="layui-val-icon larry-login">--%>
+        <%--<div class="layui-code-box">--%>
+            <%--<input type="text" id="code" name="code" placeholder="验证码" maxlength="4" class="login_txtbx">--%>
+            <%--<img src="${baseurl}/public/images/verifyimg.png" alt="" class="verifyImg" id="verifyImg"--%>
+                 <%--onclick="javascript:this.src='xxx'+Math.random();">--%>
+        <%--</div>--%>
+    <%--</div>--%>
     <div class="layui-submit larry-login">
         <button  onclick="login()"  class="submit_btn">立即登录</button>
     </div>

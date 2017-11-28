@@ -37,7 +37,7 @@
         WHERE t_role.id = #{id}
     </update>
     <update id="deletePermission" parameterType="string">
-        delete from t_role where id = #{roleId}
+          delete from t_role where id = #{roleId}
     </update>
     <select id="queryList" parameterType="Map" resultType="Map">
         SELECT *
@@ -68,10 +68,10 @@
     <select id="queryPermissionByRoleId" resultType="string" parameterType="string">
         SELECT permission.id
         FROM t_permission permission
-        LEFT JOIN (SELECT
-        sys_permission_id,
-        sys_role_id
-        FROM t_role_permission) role ON role.sys_role_id = #{roleId}
+            LEFT JOIN (SELECT
+                           sys_permission_id,
+                           sys_role_id
+                       FROM t_role_permission) role ON role.sys_role_id = #{roleId}
         WHERE role.sys_permission_id = permission.id
     </select>
 

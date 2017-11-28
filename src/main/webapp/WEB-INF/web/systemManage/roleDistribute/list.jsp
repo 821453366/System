@@ -36,9 +36,9 @@
                         <thead>
                         <tr>
                             <th>序号</th>
-                            <th>一卡通/工号</th>
+                            <th>帐号</th>
                             <th>姓名</th>
-                            <th>岗位</th>
+                            <th>职位</th>
                             <th>当前权限</th>
                         </tr>
                         </thead>

@@ -82,7 +82,18 @@ public class RoleController {
 
         return Result.failure(null, Constant.UPDATE_FAILURE);
     }
+    @RequestMapping("deletePermission")
+    @ResponseBody
+    public Result deletePermission(String roleId) {
+        try {
+            roleService.deletePermission(roleId);
+            return Result.success(null, Constant.UPDATE_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
+        return Result.failure(null, Constant.UPDATE_FAILURE);
+    }
     @RequestMapping("query")
     @ResponseBody
     public Result query(String roleId) {
