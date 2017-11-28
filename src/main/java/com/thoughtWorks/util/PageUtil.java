@@ -1,9 +1,15 @@
 package com.thoughtWorks.util;
 
+/**
+ * @author ubuntu
+ */
 public class PageUtil {
     private Long totalSize;
     private Integer currentIndex;
-    private Integer pageSize; //每页数量
+    /**
+     *每页数量
+     */
+    private Integer pageSize;
     private Object data;
 
     public Long getTotalSize() {

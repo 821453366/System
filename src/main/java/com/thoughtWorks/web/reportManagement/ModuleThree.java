@@ -4,7 +4,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * Created by admin on 2017/6/24.
+ *
+ * @author ubuntu
+ * @date 2017/11/28
  */
 @Component
 @RequestMapping("/moduleThree")

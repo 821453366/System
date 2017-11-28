@@ -13,6 +13,9 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author ubuntu
+ */
 @Controller
 @RequestMapping("/menu")
 public class MenuController {
